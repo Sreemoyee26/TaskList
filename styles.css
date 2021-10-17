@@ -1,3 +1,27 @@
 body{
     background-color: #ebf2ff;
 }
+
+.card-header,.card-footer{
+    border: 2px solid azure;
+}
+
+.card-body{
+    border: 2px solid azure;
+    border-top: none;
+    border-bottom: none;
+}
+
+.card:hover>.card-header,.card:hover>.card-footer{
+    border: 2px solid #007bffb7;
+}
+
+.card:hover>.card-body{
+    border: 2px solid #007bffb7;
+    border-top: none;
+    border-bottom: none;
+}
+
+.card:hover>.card-body>.card-title{
+    color: #007bffe8;
+}

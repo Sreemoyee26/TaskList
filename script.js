@@ -2,6 +2,7 @@ const taskContainer= document.querySelector(".task_container");
 
 let globalStorage=[];
 let gs=[];
+let fs=[];
 
 const generateNewCard = (taskData) => ` 
         <div class="col-lg-4 col-md-6 col-sm-12 mt-4">
@@ -68,14 +69,9 @@ const saveChanges = () => {
     localStorage.setItem("taskY",JSON.stringify({cards:globalStorage}));
 };
 
-const pad = num => ("0" + num).slice(-2);
-
 const getTimeFromDate = (timestamp) => {
     const DATE = new Date(timestamp * 1000);
-    let date = DATE.getDay(),
-      month = DATE.getMonth(),
-      year = DATE.getYear();
-    return pad(month) + ":" + pad(date) + ":" + pad(year)
+    return DATE.toUTCString();
 }
 
 const aa = (event) => {
@@ -85,26 +81,37 @@ const aa = (event) => {
     document.querySelector(".img").src = `${gs[0]["imageUrl"]}`;
     document.querySelector("#date").innerHTML = "Created on " + time;
     document.querySelector("#topic").innerHTML = `${gs[0]["taskTitle"]}`;
-    document.querySelector("#type").innerHTML = `${gs[0]["taskType"]}`;
+    document.querySelector("#desc").innerHTML = `${gs[0]["taskDescription"]}`;
 }
 
 const saveEdits = () => {
-    const taskData = {
-        id: `${Date.now()}`,
+    const editData = {
+        id: document.getElementById("editId").value,
         imageUrl: document.getElementById("editImg").value,
         taskTitle: document.getElementById("editTitle").value,
         taskType: document.getElementById("editType").value,
         taskDescription: document.getElementById("editDescription").value
     };
-
-    taskContainer.insertAdjacentHTML("beforeend",generateNewCard(taskData));
-    globalStorage.push(taskData);
+    globalStorage = globalStorage.map((object) =>{
+        if(object.id === editData.id){
+            object.imageUrl = editData.imageUrl;
+            object.taskTitle = editData.taskTitle;
+            object.taskType = editData.taskType;
+            object.taskDescription = editData.taskDescription;
+            return object;
+        }
+        else{
+            return object;
+        }
+    });
     localStorage.setItem("taskY",JSON.stringify({cards:globalStorage}));
+    window.location.reload(1);
 };
 
 const editCard = (event) => {
     const targetID = event.target.id;
     gs = globalStorage.filter((cardObject) => cardObject.id == targetID);
+    document.querySelector("#editId").value = targetID;
     document.querySelector("#editImg").value = `${gs[0]["imageUrl"]}`;
     document.querySelector("#editTitle").value = `${gs[0]["taskTitle"]}`;
     document.querySelector("#editType").value = `${gs[0]["taskType"]}`;
