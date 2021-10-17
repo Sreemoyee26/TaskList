@@ -25,3 +25,8 @@ body{
 .card:hover>.card-body>.card-title{
     color: #007bffe8;
 }
+
+#desc{
+    overflow-x: auto;
+    overflow-y: hidden;
+}
