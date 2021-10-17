@@ -1,5 +1,6 @@
 body{
     background-color: #ebf2ff;
+    overflow-y: auto;
 }
 
 .card-header,.card-footer{
@@ -30,3 +31,21 @@ body{
     overflow-x: auto;
     overflow-y: hidden;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+
+::-webkit-scrollbar-track {
+    background: #fff;
+}
+  
+::-webkit-scrollbar-thumb {
+    background: #007bff;
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background: #007bffbe;
+}
+  
