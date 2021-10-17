@@ -5,7 +5,7 @@ let gs=[];
 let fs=[];
 
 const generateNewCard = (taskData) => ` 
-        <div class="col-lg-4 col-md-6 col-sm-12 mt-4">
+        <div class="col-lg-4 col-md-6 col-sm-12 mt-4" id="content">
             <div class="card">
                 <div class="card-header d-flex justify-content-end gap-1">
                     <button type="button" class="btn btn-outline-success" id= ${taskData.id} data-bs-toggle="modal" data-bs-target="#editModal" 
@@ -70,8 +70,10 @@ const saveChanges = () => {
 };
 
 const getTimeFromDate = (timestamp) => {
-    const DATE = new Date(timestamp * 1000);
-    return DATE.toUTCString();
+    console.log(timestamp);
+    var DATE = new Date(timestamp*1);
+    return DATE.toDateString();
+    //return DATE.toUTCString();  for time alongwith date
 }
 
 const aa = (event) => {
@@ -116,4 +118,19 @@ const editCard = (event) => {
     document.querySelector("#editTitle").value = `${gs[0]["taskTitle"]}`;
     document.querySelector("#editType").value = `${gs[0]["taskType"]}`;
     document.querySelector("#editDescription").value = `${gs[0]["taskDescription"]}`;
+}
+
+const search = () =>{
+    var searchItem = document.querySelector(".search").value;
+    if(searchItem===""){
+        window.location.reload(1);
+    }
+    else{
+        globalStorage = globalStorage.filter((cardObject) => cardObject.taskTitle === searchItem);
+        console.log(globalStorage);
+        taskContainer.innerHTML="";
+        globalStorage.map((cardObject)=>{
+            taskContainer.insertAdjacentHTML("beforeend", generateNewCard(cardObject));
+        });
+    }
 }
