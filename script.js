@@ -70,7 +70,6 @@ const saveChanges = () => {
 };
 
 const getTimeFromDate = (timestamp) => {
-    console.log(timestamp);
     var DATE = new Date(timestamp*1);
     return DATE.toDateString();
     //return DATE.toUTCString();  for time alongwith date
@@ -120,6 +119,15 @@ const editCard = (event) => {
     document.querySelector("#editDescription").value = `${gs[0]["taskDescription"]}`;
 }
 
+var input = document.querySelector(".search");
+
+input.addEventListener("keyup", function(event) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (event.keyCode === 13) {
+    document.querySelector(".searchBtn").click();
+  }
+});
+
 const search = () =>{
     var searchItem = document.querySelector(".search").value;
     if(searchItem===""){
@@ -127,7 +135,6 @@ const search = () =>{
     }
     else{
         globalStorage = globalStorage.filter((cardObject) => cardObject.taskTitle === searchItem);
-        console.log(globalStorage);
         taskContainer.innerHTML="";
         globalStorage.map((cardObject)=>{
             taskContainer.insertAdjacentHTML("beforeend", generateNewCard(cardObject));
